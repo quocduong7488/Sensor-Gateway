@@ -1,3 +1,5 @@
+#define _POSIX_C_SOURCE 200809L
+
 #include <stdio.h>
 #include <time.h>
 #include <stdatomic.h>
@@ -5,7 +7,7 @@
 #include "node.h"
 
 static void wait_for_stop(gateway_t *gateway){
-    const struct timespec delay = {.tv_sec = 0, .tv_nsec = 100000000L}; // 100ms
+    const struct timespec delay = {.tv_sec = 0, .tv_nsec = 100000000}; // 100ms
 
     while(!atomic_load(&gateway->stop)){
         nanosleep(&delay, NULL);
