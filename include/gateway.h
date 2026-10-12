@@ -1,0 +1,17 @@
+#ifndef GATEWAY_H
+#define GATEWAY_H
+
+#include <stdint.h>
+#include <stdbool.h>
+#include <stdatomic.h>
+
+typedef struct{
+    uint16_t base_port;
+    uint16_t http_port;
+    atomic_bool stop;
+} gateway_t;
+
+void gateway_start_message(void);
+void gateway_shutdown_message(void);
+
+#endif
