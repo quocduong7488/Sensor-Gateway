@@ -11,8 +11,8 @@ TARGET = server
 
 all: $(TARGET)
 
-$(TARGET): $(SRC_DIR)/main.c	$(SRC_DIR)/gateway.c
-	gcc	$(CPPFLAGS)	$(CFLAGS) src/main.c src/gateway.c -o $(TARGET)
+$(TARGET): $(SRC_DIR)/main.c	$(SRC_DIR)/gateway.c	$(SRC_DIR)/node.c
+	gcc	$(CPPFLAGS)	$(CFLAGS) $(SRC_DIR)/main.c $(SRC_DIR)/gateway.c	$(SRC_DIR)/node.c -o $(TARGET)
 
 debug: CPPFLAGS += -DDEBUG
 debug: clean all

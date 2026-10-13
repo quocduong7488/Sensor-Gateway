@@ -9,11 +9,14 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
+#include <string.h>
 
 #include "gateway.h"
 #include "node.h"
 
 static volatile sig_atomic_t signal_received = 0;
+
+struct sigaction action = {0};
 
 static void handle_signal(int signal_number){
     (void)signal_number;
@@ -24,14 +27,14 @@ static int parse_port(const char *string, uint16_t *port){
     char *endptr = NULL;
     long value;
 
-    if(string == NULL || string[0] == '\0'){
+    if(string == NULL || *string == '\0'){
         return -1;
     }
 
     errno = 0;
     value = strtol(string, &endptr, 10);
 
-    if(errno == 0 || endptr == string || *endptr != '\0'){
+    if(errno != 0 || endptr == string || *endptr != '\0'){
         return -1;
     }
 
@@ -51,7 +54,9 @@ int main(int argc, char *argv[]){
     int result = EXIT_SUCCESS;
     int error_code;
 
-    struct sigaction action = {0};
+    action.sa_handler = handle_signal;
+    sigemptyset(&action.sa_mask);
+    action.sa_flags = 0;
 
     if(argc != 3){
         fprintf(stderr, "Usage: %s <base_sensor_port> <http_port>\n", argv[0]);

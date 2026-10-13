@@ -30,17 +30,17 @@ void *connmgr(void *arg){
     return NULL;
 }
 
-void *storemgr(void *arg){
+void *storagemgr(void *arg){
     gateway_t *gateway = arg;
 
 #ifdef DEBUG
-    printf("[DEBUG] Store manager started\n");
+    printf("[DEBUG] Storage manager started\n");
 #endif
 
     wait_for_stop(gateway);
 
 #ifdef DEBUG
-    printf("[DEBUG] Store manager stopped\n");
+    printf("[DEBUG] Storage manager stopped\n");
 #endif
 
     return NULL;
