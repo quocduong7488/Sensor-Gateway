@@ -31,10 +31,6 @@ static pid_t logger_pid = -1;
 
 static pthread_mutex_t logger_mutex = PTHREAD_MUTEX_INITIALIZER;
 
-/*
- * Write all bytes to a file descriptor.
- * This helper is used for the log file, not for FIFO events.
- */
 static int write_all(int fd, const char *buffer, size_t length)
 {
     size_t written = 0;
@@ -42,14 +38,12 @@ static int write_all(int fd, const char *buffer, size_t length)
     while (written < length)
     {
         ssize_t result = write(fd, buffer + written, length - written);
-
         if (result < 0)
         {
             if (errno == EINTR)
             {
                 continue;
             }
-
             return -1;
         }
 
@@ -60,18 +54,10 @@ static int write_all(int fd, const char *buffer, size_t length)
 
         written += (size_t)result;
     }
-
     return 0;
 }
 
-/*
- * Write one log event to gateway.log.
- * This function is called only by the logger process.
- */
-static int write_log_entry(int log_fd,
-                           unsigned long sequence,
-                           const char *source,
-                           const char *message)
+static int write_log_entry(int log_fd, unsigned long sequence, const char *source, const char *message)
 {
     time_t now;
     struct tm local_time;
@@ -90,37 +76,23 @@ static int write_log_entry(int log_fd,
         return -1;
     }
 
-    if (strftime(timestamp, sizeof(timestamp),
-                 "%Y-%m-%d %H:%M:%S", &local_time) == 0)
+    if (strftime(timestamp, sizeof(timestamp), "%Y-%m-%d %H:%M:%S", &local_time) == 0)
     {
         return -1;
     }
 
-    int length = snprintf(output, sizeof(output),
-                          "%lu %s %s %s\n",
-                          sequence, timestamp, source, message);
+    int length = snprintf(output, sizeof(output), "%lu %s %s %s\n", sequence, timestamp, source, message);
 
     if (length < 0 || (size_t)length >= sizeof(output))
     {
         return -1;
     }
-
     return write_all(log_fd, output, (size_t)length);
 }
 
-/*
- * Process one complete event received from the FIFO.
- *
- * FIFO event format:
- * SOURCE message\n
- */
-static int process_event(int log_fd,
-                         unsigned long *sequence,
-                         char *line)
+static int process_event(int log_fd, unsigned long *sequence, char *line)
 {
-    char *separator;
-    char *source;
-    char *message;
+    char *separator, *source, *message;
 
     separator = strchr(line, ' ');
 
@@ -130,7 +102,6 @@ static int process_event(int log_fd,
     }
 
     *separator = '\0';
-
     source = line;
     message = separator + 1;
 
@@ -164,18 +135,13 @@ static int process_event(int log_fd,
     return 0;
 }
 
-/*
- * Main loop of the logger child process.
- */
 static void logger_process(void)
 {
     int log_fd;
     char read_buffer[READ_SIZE];
     char line[EVENT_SIZE];
-
     size_t line_length = 0;
     unsigned long sequence = 1;
-
     int discarding_line = 0;
 
     log_fd = open(LOG_PATH, O_WRONLY | O_CREAT | O_APPEND, 0644);
@@ -187,9 +153,7 @@ static void logger_process(void)
 
     for (;;)
     {
-        ssize_t bytes_read = read(fifo_fd,
-                                  read_buffer,
-                                  sizeof(read_buffer));
+        ssize_t bytes_read = read(fifo_fd, read_buffer, sizeof(read_buffer));
 
         if (bytes_read < 0)
         {
@@ -231,7 +195,6 @@ static void logger_process(void)
                         _exit(EXIT_FAILURE);
                     }
                 }
-
                 line_length = 0;
                 discarding_line = 0;
                 continue;
@@ -248,15 +211,11 @@ static void logger_process(void)
             }
             else
             {
-                /*
-                 * Discard an oversized event until its newline.
-                 */
                 discarding_line = 1;
                 line_length = 0;
             }
         }
     }
-
     close(log_fd);
     _exit(EXIT_FAILURE);
 }
@@ -296,11 +255,6 @@ int logger_start(void)
         return -1;
     }
 
-    /*
-     * Linux allows opening a FIFO with O_RDWR.
-     * This prevents open() from blocking while waiting
-     * for the other end to be opened.
-     */
     fifo_fd = open(FIFO_PATH, O_RDWR);
 
     if (fifo_fd == -1)
@@ -329,11 +283,6 @@ int logger_start(void)
     return 0;
 }
 
-/*
- * Send one complete event through the FIFO.
- *
- * A mutex protects concurrent writes from multiple threads.
- */
 int logger_write(const char *source, const char *message)
 {
     char event[EVENT_SIZE];
@@ -371,8 +320,7 @@ int logger_write(const char *source, const char *message)
         return -1;
     }
 
-    length = snprintf(event, sizeof(event),
-                      "%s %s\n", source, message);
+    length = snprintf(event, sizeof(event), "%s %s\n", source, message);
 
     if (length < 0 || (size_t)length >= sizeof(event))
     {
@@ -392,9 +340,6 @@ int logger_write(const char *source, const char *message)
         return -1;
     }
 
-    /*
-     * Each event is sent using one write() call.
-     */
     ssize_t written = write(fifo_fd, event, (size_t)length);
 
     if (written == length)
@@ -411,17 +356,11 @@ int logger_write(const char *source, const char *message)
     return result;
 }
 
-/*
- * Ask the logger process to flush pending events and exit.
- */
 void logger_stop(void)
 {
     if (logger_pid > 0)
     {
-        /*
-         * The stop event is processed after earlier events
-         * in the FIFO.
-         */
+
         if (logger_write("MAIN", STOP_MESSAGE) != 0)
         {
             /*

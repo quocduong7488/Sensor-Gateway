@@ -13,6 +13,7 @@
 
 #include "gateway.h"
 #include "node.h"
+#include "logger.h"
 
 static volatile sig_atomic_t signal_received = 0;
 
@@ -83,6 +84,21 @@ int main(int argc, char *argv[]){
         return EXIT_FAILURE;
     }
 
+    if (logger_start() == -1) {
+        fprintf(stderr, "Failed to start logger\n");
+        return EXIT_FAILURE;
+    }
+
+    char message[200];
+
+    snprintf(message, sizeof(message), "Gateway started (TCP base port %u, HTTP port %u)", (unsigned int)gateway.base_port, (unsigned int)gateway.http_port);
+
+    if (logger_write("MAIN", message) == -1) {
+        fprintf(stderr, "Failed to write startup log\n");
+        logger_stop();
+        return EXIT_FAILURE;
+    }
+
     gateway_start_message();
 
 
@@ -90,6 +106,7 @@ int main(int argc, char *argv[]){
     printf("[DEBUG] Base sensor port: %u\n", gateway.base_port);
     printf("[DEBUG] HTTP port: %u\n", gateway.http_port);
 #endif
+
 
     error_code = pthread_create(&conn_thread, NULL, connmgr, &gateway);
     if(error_code != 0){

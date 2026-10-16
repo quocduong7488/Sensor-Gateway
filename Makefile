@@ -7,12 +7,17 @@ CFLAGS := -Wall -Wextra -Werror -pthread -Iinclude
 CPPFLAGS := 
 TARGET = server
 
+SOURCES = src/main.c \
+          src/gateway.c \
+          src/workers.c \
+          src/logger.c
+
 .PHONY: all clean debug
 
 all: $(TARGET)
 
-$(TARGET): $(SRC_DIR)/main.c	$(SRC_DIR)/gateway.c	$(SRC_DIR)/logger.c		$(SRC_DIR)/node.c
-	gcc	$(CPPFLAGS)	$(CFLAGS) $(SRC_DIR)/main.c $(SRC_DIR)/gateway.c	$(SRC_DIR)/logger.c		$(SRC_DIR)/node.c -o $(TARGET)
+$(TARGET): $(SOURCE)
+	gcc	$(CPPFLAGS)	$(CFLAGS) $(SOURCE) -o $(TARGET)
 
 debug: CPPFLAGS += -DDEBUG
 debug: clean all
