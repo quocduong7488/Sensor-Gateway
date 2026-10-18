@@ -9,7 +9,7 @@ TARGET = server
 
 SOURCES = src/main.c \
           src/gateway.c \
-          src/workers.c \
+          src/node.c \
           src/logger.c
 
 .PHONY: all clean debug
@@ -17,7 +17,7 @@ SOURCES = src/main.c \
 all: $(TARGET)
 
 $(TARGET): $(SOURCE)
-	gcc	$(CPPFLAGS)	$(CFLAGS) $(SOURCE) -o $(TARGET)
+	gcc	$(CPPFLAGS)	$(CFLAGS) $(SOURCES) -o $(TARGET)
 
 debug: CPPFLAGS += -DDEBUG
 debug: clean all

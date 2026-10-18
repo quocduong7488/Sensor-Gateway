@@ -140,7 +140,7 @@ int main(int argc, char *argv[]){
     };
 
     shutdown:
-    gateway_shutdown_message();
+
     atomic_store(&gateway.stop, true);
 
     if(conn_created){
@@ -166,6 +166,7 @@ int main(int argc, char *argv[]){
             result = EXIT_FAILURE;
         }
     }
+    gateway_shutdown_message();
 
     return result;
 }
