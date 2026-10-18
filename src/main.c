@@ -166,7 +166,19 @@ int main(int argc, char *argv[]){
             result = EXIT_FAILURE;
         }
     }
+
+    if(signal_received){
+        const char *reason = "Gateway shutting down ";
+        snprintf(message, sizeof(message), "%s", reason);
+
+        if(logger_write("Main", message) == -1){
+            fprintf(stderr, "Failed to write shutdown log\n");
+            result = EXIT_FAILURE;
+        }
+    }
+
     gateway_shutdown_message();
+    logger_stop();
 
     return result;
 }
