@@ -3,8 +3,8 @@ INC_DIR := $(CUR_DIR)/include
 SRC_DIR := $(CUR_DIR)/src
 TEST_DIR := $(CUR_DIR)/test
 
-CFLAGS := -Wall -Wextra -Werror -pthread -Iinclude
-CPPFLAGS := 
+CFLAGS := -Wall -Wextra -Werror -pthread
+CPPFLAGS := -Iinclude
 TARGET = server
 
 SOURCES = src/main.c \

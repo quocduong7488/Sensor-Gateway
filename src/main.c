@@ -1,7 +1,6 @@
 #define _POSIX_C_SOURCE 200809L
 
 #include <errno.h>
-#include <limits.h>
 #include <pthread.h>
 #include <signal.h>
 #include <stdatomic.h>
@@ -16,11 +15,10 @@
 #include "logger.h"
 
 static volatile sig_atomic_t signal_received = 0;
-
-struct sigaction action = {0};
+static volatile sig_atomic_t received_signal = 0;
 
 static void handle_signal(int signal_number){
-    (void)signal_number;
+    received_signal = signal_number;
     signal_received = 1;
 }
 
@@ -28,7 +26,7 @@ static int parse_port(const char *string, uint16_t *port){
     char *endptr = NULL;
     long value;
 
-    if(string == NULL || *string == '\0'){
+    if(string == NULL || *string == '\0' || port == NULL){
         return -1;
     }
 
@@ -39,7 +37,7 @@ static int parse_port(const char *string, uint16_t *port){
         return -1;
     }
 
-    if(value < 0 || value > 65535){
+    if(value < 1 || value > 65535){
         return -1;
     }
 

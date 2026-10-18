@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include "gateway.h"
+#include "logger.h"
 
 void gateway_start_message(void){
     printf("Gateway started\n");
