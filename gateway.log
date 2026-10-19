@@ -1,3 +1,10 @@
 1 2026-10-18 16:02:55 MAIN Gateway started (TCP base port 1234, HTTP port 8080)
 1 2026-10-18 16:03:10 MAIN Gateway started (TCP base port 1234, HTTP port 8080)
 2 2026-10-18 16:06:57 MAIN Gateway started (TCP base port 1234, HTTP port 8080)
+2 2026-10-19 14:15:32 MAIN Gateway started (TCP base port 1234, HTTP port 8080)
+3 2026-10-19 14:18:53 MAIN Gateway started (TCP base port 1234, HTTP port 8080)
+3 2026-10-19 14:18:54 MAIN Gateway shutting down (SIGINT)
+4 2026-10-19 17:22:20 MAIN Gateway started (TCP base port 1234, HTTP port 8080)
+5 2026-10-19 17:22:21 MAIN Gateway shutting down
+1 2026-10-19 17:25:23 MAIN Gateway started (TCP base port 1234, HTTP port 8080)
+2 2026-10-19 17:25:25 MAIN Gateway shutting down (signal 2)

@@ -16,11 +16,12 @@
 #include "logger.h"
 
 static volatile sig_atomic_t signal_received = 0;
+static volatile sig_atomic_t received_signal = 0;
 
 struct sigaction action = {0};
 
 static void handle_signal(int signal_number){
-    (void)signal_number;
+    received_signal = signal_number;
     signal_received = 1;
 }
 
@@ -139,39 +140,43 @@ int main(int argc, char *argv[]){
         nanosleep(&delay, NULL);
     };
 
-    shutdown:
+shutdown:
 
     atomic_store(&gateway.stop, true);
 
-    if(conn_created){
+    if (conn_created) {
         error_code = pthread_join(conn_thread, NULL);
-        if(error_code != 0){
-            fprintf(stderr, "pthread_join connmgr: %s\n", strerror(error_code));
+        if (error_code != 0) {
+            fprintf(stderr, "pthread_join connmgr: %s\n",
+                    strerror(error_code));
             result = EXIT_FAILURE;
         }
     }
 
-    if(data_created){
+    if (data_created) {
         error_code = pthread_join(data_thread, NULL);
-        if(error_code != 0){
-            fprintf(stderr, "pthread_join datamgr: %s\n", strerror(error_code));
+        if (error_code != 0) {
+            fprintf(stderr, "pthread_join datamgr: %s\n",
+                    strerror(error_code));
             result = EXIT_FAILURE;
         }
     }
 
-    if(storage_created){
+    if (storage_created) {
         error_code = pthread_join(storage_thread, NULL);
-        if(error_code != 0){
-            fprintf(stderr, "pthread_join storagemgr: %s\n", strerror(error_code));
+        if (error_code != 0) {
+            fprintf(stderr, "pthread_join storagemgr: %s\n",
+                    strerror(error_code));
             result = EXIT_FAILURE;
         }
     }
 
-    if(signal_received){
-        const char *reason = "Gateway shutting down ";
+    if (signal_received) {
+        const char *reason = "Gateway shutting down";
+
         snprintf(message, sizeof(message), "%s", reason);
 
-        if(logger_write("Main", message) == -1){
+        if (logger_write("MAIN", message) == -1) {
             fprintf(stderr, "Failed to write shutdown log\n");
             result = EXIT_FAILURE;
         }
