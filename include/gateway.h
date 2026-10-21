@@ -5,10 +5,13 @@
 #include <stdbool.h>
 #include <stdatomic.h>
 
+#include "sbuffer.h"
+
 typedef struct{
     uint16_t base_port;
     uint16_t http_port;
     atomic_bool stop;
+    sbuffer_t *buffer;
 } gateway_t;
 
 void gateway_start_message(void);

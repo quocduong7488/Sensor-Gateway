@@ -1,3 +1,6 @@
+#ifndef SENSOR_TYPES_H
+#define SENSOR_TYPES_H
+
 #include <stdint.h>
 #include <time.h>
 
@@ -17,3 +20,5 @@ typedef struct {
     double value; /* theo đơn vị của loại sensor */
     time_t ts; /* thời điểm đo, giây, UTC */
 } sensor_data_t;
+
+#endif
