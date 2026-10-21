@@ -30,20 +30,9 @@ typedef struct {
 } sbuffer_t;
 
 int sbuffer_init(sbuffer_t *buffer);
-
-int sbuffer_insert(
-    sbuffer_t *buffer,
-    const sensor_data_t *data
-);
-
-int sbuffer_read(
-    sbuffer_t *buffer,
-    sbuffer_consumer_t consumer,
-    sensor_data_t *data
-);
-
+int sbuffer_insert(sbuffer_t *buffer, const sensor_data_t *data);
+int sbuffer_read(sbuffer_t *buffer, sbuffer_consumer_t consumer, sensor_data_t *data);
 void sbuffer_shutdown(sbuffer_t *buffer);
-
 void sbuffer_destroy(sbuffer_t *buffer);
 
 #endif

@@ -2,7 +2,6 @@
 #define GATEWAY_H
 
 #include <stdint.h>
-#include <stdbool.h>
 #include <stdatomic.h>
 
 #include "sbuffer.h"

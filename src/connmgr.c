@@ -26,21 +26,21 @@
 #define CLIENT_RECV_TIMEOUT_SEC 1
 #define LISTEN_POLL_TIMEOUT_MS 500
 
-typedef struct {
+typedef struct 
+{
     int client_fd;
     gateway_t *gateway;
 } client_context_t;
 
-typedef struct client_thread_node {
+typedef struct client_thread_node 
+{
     pthread_t thread;
     struct client_thread_node *next;
 } client_thread_node_t;
 
 
-/* ============================================================
- * GATEWAY STATE
- * ============================================================
- */
+//GATEWAY STATE
+
 
 static int gateway_is_stopping(const gateway_t *gateway)
 {
@@ -48,10 +48,8 @@ static int gateway_is_stopping(const gateway_t *gateway)
 }
 
 
-/* ============================================================
- * SOCKET HELPERS
- * ============================================================
- */
+//SOCKET HELPERS
+
 
 static void close_socket(int fd)
 {
@@ -67,11 +65,8 @@ static int configure_client_socket(int client_fd)
     timeout.tv_sec = CLIENT_RECV_TIMEOUT_SEC;
     timeout.tv_usec = 0;
 
-    if (setsockopt(client_fd,
-                   SOL_SOCKET,
-                   SO_RCVTIMEO,
-                   &timeout,
-                   sizeof(timeout)) < 0) {
+    if (setsockopt(client_fd, SOL_SOCKET, SO_RCVTIMEO, &timeout, sizeof(timeout)) < 0) 
+    {
         return -1;
     }
 
@@ -79,28 +74,10 @@ static int configure_client_socket(int client_fd)
 }
 
 
-/* ============================================================
- * FRAME DECODING
- * ============================================================
- */
+//FRAME DECODING
 
-/*
- * Giả định bố cục frame:
- *
- * Offset 0:  sensor ID       - 2 bytes
- * Offset 2:  sensor value    - 8 bytes
- * Offset 10: timestamp       - 8 bytes
- *
- * Tổng cộng: 18 bytes.
- *
- * Giả định ba trường được truyền theo byte order và biểu diễn
- * nhị phân tương thích với máy chủ.
- *
- * Nếu giao thức TBP của đề bài quy định byte order khác,
- * hãy điều chỉnh hàm này theo giao thức chính thức.
- */
-static int decode_frame(const uint8_t frame[TBP_FRAME_SIZE],
-                        sensor_data_t *data)
+
+static int decode_frame(const uint8_t frame[TBP_FRAME_SIZE], sensor_data_t *data)
 {
     uint16_t sensor_id;
     double sensor_value;
@@ -112,9 +89,7 @@ static int decode_frame(const uint8_t frame[TBP_FRAME_SIZE],
     }
 
     memcpy(&sensor_id, frame, sizeof(sensor_id));
-
     memcpy(&sensor_value, frame + 2, sizeof(sensor_value));
-
     memcpy(&timestamp, frame + 10, sizeof(timestamp));
 
     if (!isfinite(sensor_value))
@@ -170,7 +145,6 @@ static int process_frame(gateway_t *gateway, const uint8_t frame[TBP_FRAME_SIZE]
 
     return 0;
 }
-
 
 
 //CLIENT CONNECTION
