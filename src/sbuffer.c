@@ -75,7 +75,6 @@ int sbuffer_insert(sbuffer_t *buffer, const sensor_data_t *data)
 int sbuffer_read(sbuffer_t *buffer, sbuffer_consumer_t consumer, sensor_data_t *data)
 {
     sbuffer_node_t *node;
-    sbuffer_node_t *previous;
     bool *read_flag;
 
     if (buffer == NULL || data == NULL) 
@@ -92,7 +91,6 @@ int sbuffer_read(sbuffer_t *buffer, sbuffer_consumer_t consumer, sensor_data_t *
 
     for (;;) 
     {
-        previous = NULL;
         node = buffer->head;
 
         while (node != NULL) 
@@ -106,7 +104,6 @@ int sbuffer_read(sbuffer_t *buffer, sbuffer_consumer_t consumer, sensor_data_t *
                 break;
             }
 
-            previous = node;
             node = node->next;
         }
 
