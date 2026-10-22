@@ -322,7 +322,7 @@ void *connmgr_run(void *arg)
         return NULL;
     }
 
-    if (gateway->base_port < 1 || gateway->base_port > 65535)
+    if ( gateway->base_port == 0)
     {
         logger_write("CONNMGR", "Invalid sensor TCP port");
 

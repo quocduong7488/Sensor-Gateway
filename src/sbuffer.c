@@ -13,11 +13,13 @@ int sbuffer_init(sbuffer_t *buffer)
     buffer->tail = NULL;
     buffer->shutdown = false;
 
-    if (pthread_mutex_init(&buffer->mutex, NULL) != 0) {
+    if (pthread_mutex_init(&buffer->mutex, NULL) != 0) 
+    {
         return -1;
     }
 
-    if (pthread_cond_init(&buffer->cond, NULL) != 0) {
+    if (pthread_cond_init(&buffer->cond, NULL) != 0) 
+    {
         pthread_mutex_destroy(&buffer->mutex);
         return -1;
     }
@@ -25,20 +27,19 @@ int sbuffer_init(sbuffer_t *buffer)
     return 0;
 }
 
-int sbuffer_insert(
-    sbuffer_t *buffer,
-    const sensor_data_t *data
-)
+int sbuffer_insert(sbuffer_t *buffer, const sensor_data_t *data)
 {
     sbuffer_node_t *node;
 
-    if (buffer == NULL || data == NULL) {
+    if (buffer == NULL || data == NULL)
+    {
         return -1;
     }
 
     node = malloc(sizeof(*node));
 
-    if (node == NULL) {
+    if (node == NULL)
+    {
         return -1;
     }
 
@@ -49,13 +50,15 @@ int sbuffer_insert(
 
     pthread_mutex_lock(&buffer->mutex);
 
-    if (buffer->shutdown) {
+    if (buffer->shutdown) 
+    {
         pthread_mutex_unlock(&buffer->mutex);
         free(node);
         return -1;
     }
 
-    if (buffer->tail == NULL) {
+    if (buffer->tail == NULL)
+     {
         buffer->head = node;
         buffer->tail = node;
     } else {
@@ -64,47 +67,42 @@ int sbuffer_insert(
     }
 
     pthread_cond_broadcast(&buffer->cond);
-
     pthread_mutex_unlock(&buffer->mutex);
 
     return 0;
 }
 
-int sbuffer_read(
-    sbuffer_t *buffer,
-    sbuffer_consumer_t consumer,
-    sensor_data_t *data
-)
+int sbuffer_read(sbuffer_t *buffer, sbuffer_consumer_t consumer, sensor_data_t *data)
 {
     sbuffer_node_t *node;
     sbuffer_node_t *previous;
     bool *read_flag;
 
-    if (buffer == NULL || data == NULL) {
+    if (buffer == NULL || data == NULL) 
+    {
         return -1;
     }
 
-    if (consumer != SBUFFER_DATA_MANAGER &&
-        consumer != SBUFFER_STORAGE_MANAGER) {
+    if (consumer != SBUFFER_DATA_MANAGER && consumer != SBUFFER_STORAGE_MANAGER) 
+    {
         return -1;
     }
 
     pthread_mutex_lock(&buffer->mutex);
 
-    for (;;) {
-        /*
-         * Tìm phép đo đầu tiên mà consumer
-         * hiện tại chưa đọc.
-         */
+    for (;;) 
+    {
         previous = NULL;
         node = buffer->head;
 
-        while (node != NULL) {
+        while (node != NULL) 
+        {
             read_flag = (consumer == SBUFFER_DATA_MANAGER)
                 ? &node->read_by_data
                 : &node->read_by_storage;
 
-            if (!*read_flag) {
+            if (!*read_flag)
+            {
                 break;
             }
 
@@ -112,12 +110,8 @@ int sbuffer_read(
             node = node->next;
         }
 
-        if (node != NULL) {
-            /*
-             * Sao chép dữ liệu khi đang giữ mutex.
-             * Sau khi mở khóa, consumer sử dụng
-             * bản sao độc lập.
-             */
+        if (node != NULL) 
+        {
             *data = node->data;
 
             read_flag = (consumer == SBUFFER_DATA_MANAGER)
@@ -126,14 +120,8 @@ int sbuffer_read(
 
             *read_flag = true;
 
-            /*
-             * Xóa các node đã được cả hai consumer
-             * đọc. Các node bị xóa phải nằm ở đầu
-             * danh sách để bảo toàn cấu trúc queue.
-             */
-            while (buffer->head != NULL &&
-                   buffer->head->read_by_data &&
-                   buffer->head->read_by_storage) {
+            while (buffer->head != NULL && buffer->head->read_by_data && buffer->head->read_by_storage) 
+                   {
 
                 sbuffer_node_t *old = buffer->head;
 

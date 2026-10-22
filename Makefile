@@ -11,7 +11,7 @@ LDFLAGS := -pthread
 LDLIBS := -lm
 
 SOURCES = $(wildcard $(SRC_DIR)/*.c)
-OBJS := $(patsubst $(SRC_DIR)/%.c,$(BUILD_DIR)/%.o,$(SRCS))
+OBJS := $(patsubst $(SRC_DIR)/%.c,$(BUILD_DIR)/%.o,$(SOURCES))
 DEPS := $(OBJS:.o=.d)
 
 .PHONY: all clean debug
@@ -33,4 +33,4 @@ debug: CPPFLAGS += -DDEBUG
 debug: clean all
 
 clean:
-	rm -f $(TARGET)
+	rm -rf $(BUILD_DIR) $(TARGET)
