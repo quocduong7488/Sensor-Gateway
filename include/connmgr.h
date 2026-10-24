@@ -2,7 +2,8 @@
 #define CONNMGR_H
 
 #include "gateway.h"
+#include "sbuffer.h"
 
-void *connmgr_run(void *arg);
+void *connmgr_thread(void *arg);
 
 #endif /* CONNMGR_H */

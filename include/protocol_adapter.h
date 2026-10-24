@@ -1,6 +1,11 @@
+#ifndef PROTOCOL_ADAPTER_H
+#define PROTOCOL_ADAPTER_H
+
 #include <stddef.h>
 #include <stdint.h>
+
 #include "sensor_types.h"
+
 typedef enum {
     PARSE_ERROR = -1, /* frame hỏng: sai magic, độ dài, CRC, giá trị */
     PARSE_NEED_MORE = 0, /* chưa đủ byte để tạo thành một frame */
@@ -18,3 +23,5 @@ typedef struct {
     /* Tạo phản hồi gửi lại sensor; trả 0 nếu giao thức không có phản hồi. */
     size_t (*build_reply)(parse_result_t result, uint8_t *reply, size_t cap);
 } protocol_adapter_t;
+
+#endif
