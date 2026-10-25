@@ -48,11 +48,6 @@ static size_t build_sgp_reply(
     size_t cap
 );
 
-/*
- * Bang adapter.
- * Doi ten truong neu protocol_adapter.h cua ban
- * su dung ten khac.
- */
 static const protocol_adapter_t adapters[] = {
     {
         .name = "TBP",
