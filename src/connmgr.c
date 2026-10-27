@@ -129,14 +129,14 @@ static int process_frame(gateway_t *gateway, const uint8_t frame[TBP_FRAME_SIZE]
         return -1;
     }
 
-    if (gateway->buffer == NULL)
+    if (gateway->sbuffer == NULL)
     {
         logger_write("CONNMGR", "Shared buffer is not initialized");
 
         return -1;
     }
 
-    if (sbuffer_insert(gateway->buffer, &data) != 0) 
+    if (sbuffer_insert(gateway->sbuffer, &data) != 0) 
     {
         logger_write("CONNMGR", "Failed to insert sensor data");
 
