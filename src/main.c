@@ -50,6 +50,7 @@ static int parse_port(const char *string, uint16_t *port){
 
 int main(int argc, char *argv[]){
     gateway_t gateway;
+    sbuffer_t shared_buffer;
     pthread_t conn_thread, data_thread, storage_thread;
 
     int conn_created = 0, data_created = 0, storage_created = 0;
@@ -81,6 +82,16 @@ int main(int argc, char *argv[]){
     }
 
     atomic_init(&gateway.stop, false);
+
+    gateway.sbuffer = NULL;
+
+    
+    if (sbuffer_init(&shared_buffer) != 0) {
+        fprintf(stderr, "Failed to initialize shared buffer\n");
+        return EXIT_FAILURE;
+    }
+
+    gateway.sbuffer = &shared_buffer;
 
     if(sigaction(SIGINT, &action, NULL) == -1 || sigaction(SIGTERM, &action, NULL) == -1){
         perror("sigaction");
@@ -143,6 +154,7 @@ int main(int argc, char *argv[]){
 shutdown:
 
     atomic_store(&gateway.stop, true);
+    sbuffer_shutdown(gateway.sbuffer);
 
     if (conn_created) {
         error_code = pthread_join(conn_thread, NULL);
@@ -182,6 +194,7 @@ shutdown:
         }
     }
 
+    sbuffer_destroy(&shared_buffer);
     gateway_shutdown_message();
     logger_stop();
 
