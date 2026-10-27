@@ -5,6 +5,7 @@
 #include <stdatomic.h>
 
 #include "node.h"
+#include "connmgr.h"
 
 static void wait_for_stop(gateway_t *gateway){
     const struct timespec delay = {.tv_sec = 0, .tv_nsec = 100000000}; // 100ms
@@ -14,20 +15,13 @@ static void wait_for_stop(gateway_t *gateway){
     }
 }
 
-void *connmgr(void *arg){
-    gateway_t *gateway = arg;
-
+void *connmgr(void *arg)
+{
 #ifdef DEBUG
     printf("[DEBUG] Connection manager started\n");
 #endif
 
-    wait_for_stop(gateway);
-
-#ifdef DEBUG
-    printf("[DEBUG] Connection manager stopped\n");
-#endif
-
-    return NULL;
+    return connmgr_run(arg);
 }
 
 void *storagemgr(void *arg){

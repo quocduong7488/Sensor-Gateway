@@ -24,4 +24,7 @@ typedef struct {
     size_t (*build_reply)(parse_result_t result, uint8_t *reply, size_t cap);
 } protocol_adapter_t;
 
+size_t protocol_adapter_count(void);
+const protocol_adapter_t *protocol_adapter_get(size_t index);
+
 #endif

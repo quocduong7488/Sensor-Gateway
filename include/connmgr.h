@@ -5,5 +5,6 @@
 #include "sbuffer.h"
 
 void *connmgr_thread(void *arg);
+void *connmgr_run(void *arg);
 
 #endif /* CONNMGR_H */

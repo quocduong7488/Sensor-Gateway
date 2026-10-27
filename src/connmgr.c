@@ -379,11 +379,12 @@ void *connmgr_run(void *arg)
     while (!gateway_is_stopping(gateway))
     {
         struct pollfd poll_fd;
-        int poll_result = poll(&poll_fd, 1, LISTEN_POLL_TIMEOUT_MS);
 
         poll_fd.fd = server_fd;
         poll_fd.events = POLLIN;
         poll_fd.revents = 0;
+
+        int poll_result = poll(&poll_fd, 1, LISTEN_POLL_TIMEOUT_MS);
 
 
 
