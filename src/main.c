@@ -197,6 +197,7 @@ shutdown:
     sbuffer_destroy(&shared_buffer);
     gateway_shutdown_message();
     logger_stop();
+    
 
     return result;
 }

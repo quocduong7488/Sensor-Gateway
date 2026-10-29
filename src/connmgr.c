@@ -26,11 +26,14 @@
 #define STREAM_BUFFER_SIZE 2048
 #define CLIENT_RECV_TIMEOUT_SEC 1
 #define LISTEN_POLL_TIMEOUT_MS 500
+#define MAX_CONSECUTIVE_FRAME_ERRORS 5U
 
 typedef struct {
     int client_fd;
     gateway_t *gateway;
     const protocol_adapter_t *adapter;
+    unsigned int consecutive_frame_errors;
+    int close_requested;
 } client_context_t;
 
 typedef struct client_thread_node {
@@ -66,16 +69,6 @@ static int configure_client_socket(int client_fd)
     );
 }
 
-/*
- * Xử lý dữ liệu đã nhận từ TCP stream.
- *
- * Một lần recv() có thể nhận:
- * - Một phần của frame.
- * - Chính xác một frame.
- * - Nhiều frame liên tiếp.
- *
- * Adapter quyết định số byte cần tiêu thụ.
- */
 static void process_stream(
     client_context_t *context,
     uint8_t *buffer,
@@ -96,36 +89,32 @@ static void process_stream(
         );
 
         if (result == PARSE_NEED_MORE) {
-            /*
-             * Giữ nguyên dữ liệu để đợi recv() tiếp theo.
-             * Nếu buffer đầy mà parser vẫn yêu cầu thêm,
-             * bỏ một byte để tránh kẹt stream.
-             */
             if (*used < STREAM_BUFFER_SIZE) {
                 return;
             }
 
             logger_write(
-                "CONNMGR",
+                "CONN",
                 "Parser needs more data but stream buffer is full"
             );
 
             consumed = 1;
         } else if (result == PARSE_OK) {
+            context->consecutive_frame_errors = 0;
             if (consumed == 0 || consumed > *used) {
                 logger_write(
-                    "CONNMGR",
+                    "CONN",
                     "Protocol parser returned invalid consumed length"
                 );
                 consumed = 1;
             } else if (gateway->sbuffer == NULL) {
                 logger_write(
-                    "CONNMGR",
+                    "CONN",
                     "Shared buffer is not initialized"
                 );
             } else if (sbuffer_insert(gateway->sbuffer, &data) != 0) {
                 logger_write(
-                    "CONNMGR",
+                    "CONN",
                     "Failed to insert sensor data"
                 );
             } else {
@@ -140,19 +129,20 @@ static void process_stream(
                     (int)data.type
                 );
 
-                logger_write("CONNMGR", message);
+                logger_write("CONN", message);
             }
         } else {
-            /*
-             * Frame lỗi: bỏ số byte mà parser yêu cầu.
-             * Nếu consumed không hợp lệ, bỏ một byte để
-             * bảo đảm vòng lặp luôn tiến lên.
-             */
             if (consumed == 0 || consumed > *used) {
                 consumed = 1;
             }
 
-            logger_write("CONNMGR", "Invalid protocol frame");
+            context->consecutive_frame_errors++;
+            logger_write("CONN", "Invalid protocol frame");
+
+            if (context->consecutive_frame_errors >= MAX_CONSECUTIVE_FRAME_ERRORS) {
+                logger_write("CONN", "Too many consecutive frame errors; closing client connection");
+                context->close_requested = 1;
+            }
         }
 
         /*
@@ -170,7 +160,7 @@ static void process_stream(
 
             if (reply_len > sizeof(reply)) {
                 logger_write(
-                    "CONNMGR",
+                    "CONN",
                     "Protocol adapter returned invalid reply length"
                 );
             } else if (reply_len > 0) {
@@ -191,12 +181,16 @@ static void process_stream(
                     } else {
                         sent = reply_len;
                         logger_write(
-                            "CONNMGR",
+                            "CONN",
                             "Failed to send protocol reply"
                         );
                     }
                 }
             }
+        }
+
+        if (context->close_requested) {
+            return;
         }
 
         *used -= consumed;
@@ -225,7 +219,7 @@ static void handle_client(client_context_t *context)
         client_fd
     );
 
-    logger_write("CONNMGR", message);
+    logger_write("CONN", message);
 
     if (configure_client_socket(client_fd) != 0) {
         snprintf(
@@ -235,7 +229,7 @@ static void handle_client(client_context_t *context)
             strerror(errno)
         );
 
-        logger_write("CONNMGR", message);
+        logger_write("CONN", message);
         goto cleanup;
     }
 
@@ -266,25 +260,24 @@ static void handle_client(client_context_t *context)
                 strerror(errno)
             );
 
-            logger_write("CONNMGR", message);
+            logger_write("CONN", message);
             break;
         }
 
         size_t incoming = (size_t)received;
 
         while (incoming > 0) {
-            /*
-             * Xử lý buffer trước khi thêm dữ liệu mới.
-             * Parser thông thường chỉ giữ lại một frame
-             * chưa hoàn chỉnh.
-             */
             process_stream(context, stream_buffer, &used);
+
+            if (context->close_requested) {
+                goto cleanup;
+            }
 
             size_t available = sizeof(stream_buffer) - used;
 
             if (available == 0) {
                 logger_write(
-                    "CONNMGR",
+                    "CONN",
                     "Stream buffer is full; discarding one byte"
                 );
 
@@ -312,12 +305,16 @@ static void handle_client(client_context_t *context)
             incoming -= to_copy;
 
             process_stream(context, stream_buffer, &used);
+
+            if (context->close_requested) {
+                goto cleanup;
+            }
         }
     }
 
     if (gateway_is_stopping(gateway)) {
         logger_write(
-            "CONNMGR",
+            "CONN",
             "Closing client connection during shutdown"
         );
     }
@@ -333,7 +330,7 @@ cleanup:
         client_fd
     );
 
-    logger_write("CONNMGR", message);
+    logger_write("CONN", message);
 }
 
 static void *client_thread_run(void *arg)
@@ -385,7 +382,7 @@ static void join_client_threads(client_thread_node_t *head)
                 strerror(result)
             );
 
-            logger_write("CONNMGR", message);
+            logger_write("CONN", message);
         }
 
         free(head);
@@ -417,7 +414,7 @@ static int create_listener(
             strerror(errno)
         );
 
-        logger_write("CONNMGR", message);
+        logger_write("CONN", message);
         return -1;
     }
 
@@ -435,7 +432,7 @@ static int create_listener(
             strerror(errno)
         );
 
-        logger_write("CONNMGR", message);
+        logger_write("CONN", message);
         close_socket(server_fd);
         return -1;
     }
@@ -459,7 +456,7 @@ static int create_listener(
             strerror(errno)
         );
 
-        logger_write("CONNMGR", message);
+        logger_write("CONN", message);
         close_socket(server_fd);
         return -1;
     }
@@ -473,7 +470,7 @@ static int create_listener(
             strerror(errno)
         );
 
-        logger_write("CONNMGR", message);
+        logger_write("CONN", message);
         close_socket(server_fd);
         return -1;
     }
@@ -486,7 +483,7 @@ static int create_listener(
         (unsigned int)port
     );
 
-    logger_write("CONNMGR", message);
+    logger_write("CONN", message);
 
     return server_fd;
 }
@@ -510,13 +507,13 @@ void *connmgr_run(void *arg)
     }
 
     if (gateway == NULL) {
-        logger_write("CONNMGR", "Invalid Gateway argument");
+        logger_write("CONN", "Invalid Gateway argument");
         return NULL;
     }
 
     if (gateway->base_port == 0 ||
         gateway->base_port > 65532) {
-        logger_write("CONNMGR", "Invalid sensor base port");
+        logger_write("CONN", "Invalid sensor base port");
         return NULL;
     }
 
@@ -524,7 +521,7 @@ void *connmgr_run(void *arg)
 
     if (adapter_count == 0 || adapter_count > MAX_ADAPTERS) {
         logger_write(
-            "CONNMGR",
+            "CONN",
             "Invalid number of protocol adapters"
         );
 
@@ -542,7 +539,7 @@ void *connmgr_run(void *arg)
             adapters[i]->parse == NULL ||
             adapters[i]->build_reply == NULL) {
             logger_write(
-                "CONNMGR",
+                "CONN",
                 "Invalid protocol adapter configuration"
             );
 
@@ -555,7 +552,7 @@ void *connmgr_run(void *arg)
 
         if (port == 0 || port > 65535) {
             logger_write(
-                "CONNMGR",
+                "CONN",
                 "Protocol adapter port is out of range"
             );
 
@@ -597,7 +594,7 @@ void *connmgr_run(void *arg)
                 strerror(errno)
             );
 
-            logger_write("CONNMGR", message);
+            logger_write("CONN", message);
             break;
         }
 
@@ -616,7 +613,7 @@ void *connmgr_run(void *arg)
                         adapters[i]->name
                     );
 
-                    logger_write("CONNMGR", message);
+                    logger_write("CONN", message);
                 }
 
                 continue;
@@ -645,7 +642,7 @@ void *connmgr_run(void *arg)
                     strerror(errno)
                 );
 
-                logger_write("CONNMGR", message);
+                logger_write("CONN", message);
                 continue;
             }
 
@@ -658,7 +655,7 @@ void *connmgr_run(void *arg)
 
             if (context == NULL) {
                 logger_write(
-                    "CONNMGR",
+                    "CONN",
                     "Cannot allocate client context"
                 );
 
@@ -669,12 +666,14 @@ void *connmgr_run(void *arg)
             context->client_fd = client_fd;
             context->gateway = gateway;
             context->adapter = adapters[i];
+            context->consecutive_frame_errors = 0;
+            context->close_requested = 0;
 
             client_thread_node_t *node = malloc(sizeof(*node));
 
             if (node == NULL) {
                 logger_write(
-                    "CONNMGR",
+                    "CONN",
                     "Cannot allocate client thread node"
                 );
 
@@ -700,7 +699,7 @@ void *connmgr_run(void *arg)
                     strerror(thread_result)
                 );
 
-                logger_write("CONNMGR", message);
+                logger_write("CONN", message);
 
                 free(context);
                 free(node);
@@ -720,7 +719,7 @@ cleanup:
 
     join_client_threads(thread_list);
 
-    logger_write("CONNMGR", "Connection Manager stopped");
+    logger_write("CONN", "Connection Manager stopped");
 
     return NULL;
 }

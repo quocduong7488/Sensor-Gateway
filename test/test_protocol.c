@@ -214,6 +214,18 @@ static void test_evp_door(void)
     CHECK(fabs(out.value - 1.0) < 0.000001, "EVP door open state decoded");
 }
 
+static void test_crc16_ccitt_false(void)
+{
+    static const uint8_t test_vector[] = "123456789";
+    uint16_t crc = crc16_ccitt_false(
+        test_vector,
+        sizeof(test_vector) - 1U
+    );
+
+    CHECK(crc == 0x29B1U,
+          "CRC-16/CCITT-FALSE standard vector produces 0x29B1");
+}
+
 static void test_sgp(void)
 {
     const protocol_adapter_t *a = get_adapter("SGP");
@@ -262,6 +274,7 @@ int main(void)
     test_hlp();
     test_evp_motion();
     test_evp_door();
+    test_crc16_ccitt_false();
     test_sgp();
 
     printf("\nTests: %d, failures: %d\n", tests, failures);
