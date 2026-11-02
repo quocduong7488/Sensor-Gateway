@@ -154,21 +154,21 @@ int main(int argc, char *argv[]){
 shutdown:
 
     atomic_store(&gateway.stop, true);
+    if (conn_created) {
+        error_code = pthread_join(conn_thread, NULL);
+        if (error_code != 0) {
+            fprintf(stderr, "pthread_join connmgr: %s\n",
+                strerror(error_code));
+            result = EXIT_FAILURE;
+        }
+    }
+
     sbuffer_shutdown(gateway.sbuffer);
 
     if (conn_created) {
         error_code = pthread_join(conn_thread, NULL);
         if (error_code != 0) {
             fprintf(stderr, "pthread_join connmgr: %s\n",
-                    strerror(error_code));
-            result = EXIT_FAILURE;
-        }
-    }
-
-    if (data_created) {
-        error_code = pthread_join(data_thread, NULL);
-        if (error_code != 0) {
-            fprintf(stderr, "pthread_join datamgr: %s\n",
                     strerror(error_code));
             result = EXIT_FAILURE;
         }

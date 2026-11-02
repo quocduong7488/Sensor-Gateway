@@ -12,13 +12,15 @@ LDFLAGS := -pthread
 LDLIBS := -lm
 
 SOURCES := 	\
-	$(SRC_DIR)/main.c \
-	$(SRC_DIR)/gateway.c \
-	$(SRC_DIR)/logger.c \
-	$(SRC_DIR)/node.c \
-	$(SRC_DIR)/connmgr.c \
-	$(SRC_DIR)/sbuffer.c \
-	$(SRC_DIR)/protocol_adapter.c
+	$(SRC_DIR)/main.c	\
+	$(SRC_DIR)/gateway.c	\
+	$(SRC_DIR)/logger.c	\
+	$(SRC_DIR)/node.c	\
+	$(SRC_DIR)/connmgr.c	\
+	$(SRC_DIR)/sbuffer.c	\
+	$(SRC_DIR)/protocol_adapter.c	\
+	$(SRC_DIR)/datamgr.c	\
+
 
 OBJS := $(patsubst $(SRC_DIR)/%.c,$(BUILD_DIR)/%.o,$(SOURCES))
 DEPS := $(OBJS:.o=.d)
