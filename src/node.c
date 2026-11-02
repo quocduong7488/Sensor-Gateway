@@ -7,10 +7,14 @@
 #include "node.h"
 #include "connmgr.h"
 
-static void wait_for_stop(gateway_t *gateway){
-    const struct timespec delay = {.tv_sec = 0, .tv_nsec = 100000000}; // 100ms
+static void wait_for_stop(gateway_t *gateway)
+{
+    const struct timespec delay = {
+        .tv_sec = 0,
+        .tv_nsec = 100000000
+    };
 
-    while(!atomic_load(&gateway->stop)){
+    while (!atomic_load(&gateway->stop)) {
         nanosleep(&delay, NULL);
     }
 }
@@ -24,7 +28,8 @@ void *connmgr(void *arg)
     return connmgr_run(arg);
 }
 
-void *storagemgr(void *arg){
+void *storagemgr(void *arg)
+{
     gateway_t *gateway = arg;
 
 #ifdef DEBUG
@@ -39,20 +44,3 @@ void *storagemgr(void *arg){
 
     return NULL;
 }
-
-void *datamgr(void *arg){
-    gateway_t *gateway = arg;
-
-#ifdef DEBUG
-    printf("[DEBUG] Data manager started\n");
-#endif
-
-    wait_for_stop(gateway);
-
-#ifdef DEBUG
-    printf("[DEBUG] Data manager stopped\n");
-#endif
-
-    return NULL;
-}
-

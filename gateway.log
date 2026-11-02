@@ -12153,3 +12153,426 @@
 5653 2026-10-29 11:49:49 CONN SGP client disconnected (socket=19)
 5654 2026-10-29 11:49:49 CONN Connection Manager stopped
 5655 2026-10-29 11:49:49 MAIN Gateway shutting down
+1 2026-11-02 17:54:15 MAIN Gateway started (TCP base port 9000, HTTP port 8080)
+2 2026-11-02 17:54:15 CONN TBP listening on TCP port 9000
+3 2026-11-02 17:54:15 CONN HLP listening on TCP port 9001
+4 2026-11-02 17:54:15 CONN EVP listening on TCP port 9002
+5 2026-11-02 17:54:15 CONN SGP listening on TCP port 9003
+6 2026-11-02 17:54:15 DATA Data Manager started
+7 2026-11-02 17:57:15 CONN TBP client connected (socket=8)
+8 2026-11-02 17:57:15 CONN TBP frame accepted: sensor=10 type=1
+9 2026-11-02 17:57:16 CONN TBP frame accepted: sensor=10 type=1
+10 2026-11-02 17:57:17 CONN TBP frame accepted: sensor=10 type=1
+11 2026-11-02 17:57:18 CONN TBP frame accepted: sensor=10 type=1
+12 2026-11-02 17:57:19 CONN TBP frame accepted: sensor=10 type=1
+13 2026-11-02 17:57:19 DATA The sensor node with 10 reports it's too hot (running avg temperature = 20.20)
+14 2026-11-02 17:57:20 CONN TBP frame accepted: sensor=10 type=1
+15 2026-11-02 17:57:21 CONN TBP frame accepted: sensor=10 type=1
+16 2026-11-02 17:57:22 CONN TBP frame accepted: sensor=10 type=1
+17 2026-11-02 17:57:23 CONN TBP frame accepted: sensor=10 type=1
+18 2026-11-02 17:57:24 CONN TBP frame accepted: sensor=10 type=1
+19 2026-11-02 17:57:25 CONN TBP frame accepted: sensor=10 type=1
+20 2026-11-02 17:57:26 CONN TBP frame accepted: sensor=10 type=1
+21 2026-11-02 17:57:27 CONN TBP frame accepted: sensor=10 type=1
+22 2026-11-02 17:57:28 CONN TBP frame accepted: sensor=10 type=1
+23 2026-11-02 17:57:29 CONN TBP frame accepted: sensor=10 type=1
+24 2026-11-02 17:57:29 CONN HLP client connected (socket=9)
+25 2026-11-02 17:57:29 CONN HLP frame accepted: sensor=21 type=2
+26 2026-11-02 17:57:30 CONN TBP frame accepted: sensor=10 type=1
+27 2026-11-02 17:57:30 CONN HLP frame accepted: sensor=21 type=2
+28 2026-11-02 17:57:31 CONN TBP frame accepted: sensor=10 type=1
+29 2026-11-02 17:57:31 CONN HLP frame accepted: sensor=21 type=2
+30 2026-11-02 17:57:32 CONN TBP frame accepted: sensor=10 type=1
+31 2026-11-02 17:57:32 CONN HLP frame accepted: sensor=21 type=2
+32 2026-11-02 17:57:33 CONN TBP frame accepted: sensor=10 type=1
+33 2026-11-02 17:57:33 CONN HLP frame accepted: sensor=21 type=2
+34 2026-11-02 17:57:34 CONN TBP frame accepted: sensor=10 type=1
+35 2026-11-02 17:57:34 CONN EVP client connected (socket=10)
+36 2026-11-02 17:57:34 CONN EVP frame accepted: sensor=30 type=3
+37 2026-11-02 17:57:34 DATA The sensor node with 30 detected motion
+38 2026-11-02 17:57:34 CONN HLP frame accepted: sensor=21 type=2
+39 2026-11-02 17:57:35 CONN TBP frame accepted: sensor=10 type=1
+40 2026-11-02 17:57:35 CONN EVP frame accepted: sensor=30 type=3
+41 2026-11-02 17:57:35 DATA The sensor node with 30 detected motion
+42 2026-11-02 17:57:35 CONN HLP frame accepted: sensor=21 type=2
+43 2026-11-02 17:57:36 CONN TBP frame accepted: sensor=10 type=1
+44 2026-11-02 17:57:36 CONN EVP frame accepted: sensor=30 type=3
+45 2026-11-02 17:57:36 DATA The sensor node with 30 detected motion
+46 2026-11-02 17:57:36 CONN HLP frame accepted: sensor=21 type=2
+47 2026-11-02 17:57:37 CONN TBP frame accepted: sensor=10 type=1
+48 2026-11-02 17:57:37 CONN EVP frame accepted: sensor=30 type=3
+49 2026-11-02 17:57:37 DATA The sensor node with 30 detected motion
+50 2026-11-02 17:57:37 CONN HLP frame accepted: sensor=21 type=2
+51 2026-11-02 17:57:38 CONN TBP frame accepted: sensor=10 type=1
+52 2026-11-02 17:57:38 CONN EVP frame accepted: sensor=30 type=3
+53 2026-11-02 17:57:38 DATA The sensor node with 30 detected motion
+54 2026-11-02 17:57:38 CONN HLP frame accepted: sensor=21 type=2
+55 2026-11-02 17:57:39 CONN TBP frame accepted: sensor=10 type=1
+56 2026-11-02 17:57:39 CONN EVP frame accepted: sensor=30 type=3
+57 2026-11-02 17:57:39 DATA The sensor node with 30 detected motion
+58 2026-11-02 17:57:39 CONN HLP frame accepted: sensor=21 type=2
+59 2026-11-02 17:57:40 CONN TBP frame accepted: sensor=10 type=1
+60 2026-11-02 17:57:40 CONN EVP client connected (socket=11)
+61 2026-11-02 17:57:40 CONN EVP frame accepted: sensor=40 type=4
+62 2026-11-02 17:57:40 DATA The sensor node with 40 reports the door is closed
+63 2026-11-02 17:57:40 CONN EVP frame accepted: sensor=30 type=3
+64 2026-11-02 17:57:40 DATA The sensor node with 30 detected motion
+65 2026-11-02 17:57:40 CONN HLP frame accepted: sensor=21 type=2
+66 2026-11-02 17:57:41 CONN TBP frame accepted: sensor=10 type=1
+67 2026-11-02 17:57:41 CONN EVP frame accepted: sensor=40 type=4
+68 2026-11-02 17:57:41 DATA The sensor node with 40 reports the door is open
+69 2026-11-02 17:57:41 CONN EVP frame accepted: sensor=30 type=3
+70 2026-11-02 17:57:41 DATA The sensor node with 30 detected motion
+71 2026-11-02 17:57:41 CONN HLP frame accepted: sensor=21 type=2
+72 2026-11-02 17:57:42 CONN TBP frame accepted: sensor=10 type=1
+73 2026-11-02 17:57:42 CONN EVP frame accepted: sensor=40 type=4
+74 2026-11-02 17:57:42 DATA The sensor node with 40 reports the door is closed
+75 2026-11-02 17:57:42 CONN EVP frame accepted: sensor=30 type=3
+76 2026-11-02 17:57:42 DATA The sensor node with 30 detected motion
+77 2026-11-02 17:57:42 CONN HLP frame accepted: sensor=21 type=2
+78 2026-11-02 17:57:43 CONN TBP frame accepted: sensor=10 type=1
+79 2026-11-02 17:57:43 CONN EVP frame accepted: sensor=40 type=4
+80 2026-11-02 17:57:43 DATA The sensor node with 40 reports the door is open
+81 2026-11-02 17:57:43 CONN EVP frame accepted: sensor=30 type=3
+82 2026-11-02 17:57:43 DATA The sensor node with 30 detected motion
+83 2026-11-02 17:57:43 CONN HLP frame accepted: sensor=21 type=2
+84 2026-11-02 17:57:44 CONN TBP frame accepted: sensor=10 type=1
+85 2026-11-02 17:57:44 CONN EVP frame accepted: sensor=40 type=4
+86 2026-11-02 17:57:44 DATA The sensor node with 40 reports the door is closed
+87 2026-11-02 17:57:44 CONN EVP frame accepted: sensor=30 type=3
+88 2026-11-02 17:57:44 DATA The sensor node with 30 detected motion
+89 2026-11-02 17:57:44 CONN HLP frame accepted: sensor=21 type=2
+90 2026-11-02 17:57:45 CONN TBP frame accepted: sensor=10 type=1
+91 2026-11-02 17:57:45 CONN EVP frame accepted: sensor=40 type=4
+92 2026-11-02 17:57:45 DATA The sensor node with 40 reports the door is open
+93 2026-11-02 17:57:45 CONN EVP frame accepted: sensor=30 type=3
+94 2026-11-02 17:57:45 DATA The sensor node with 30 detected motion
+95 2026-11-02 17:57:45 CONN HLP frame accepted: sensor=21 type=2
+96 2026-11-02 17:57:46 CONN TBP frame accepted: sensor=10 type=1
+97 2026-11-02 17:57:46 CONN SGP client connected (socket=12)
+98 2026-11-02 17:57:46 CONN SGP frame accepted: sensor=50 type=5
+99 2026-11-02 17:57:46 CONN EVP frame accepted: sensor=40 type=4
+100 2026-11-02 17:57:46 DATA The sensor node with 40 reports the door is closed
+101 2026-11-02 17:57:46 CONN EVP frame accepted: sensor=30 type=3
+102 2026-11-02 17:57:46 DATA The sensor node with 30 detected motion
+103 2026-11-02 17:57:46 CONN HLP frame accepted: sensor=21 type=2
+104 2026-11-02 17:57:47 CONN TBP frame accepted: sensor=10 type=1
+105 2026-11-02 17:57:47 CONN SGP frame accepted: sensor=50 type=5
+106 2026-11-02 17:57:47 CONN EVP frame accepted: sensor=40 type=4
+107 2026-11-02 17:57:47 DATA The sensor node with 40 reports the door is open
+108 2026-11-02 17:57:47 CONN EVP frame accepted: sensor=30 type=3
+109 2026-11-02 17:57:47 DATA The sensor node with 30 detected motion
+110 2026-11-02 17:57:47 CONN HLP frame accepted: sensor=21 type=2
+111 2026-11-02 17:57:48 CONN TBP frame accepted: sensor=10 type=1
+112 2026-11-02 17:57:48 CONN SGP frame accepted: sensor=50 type=5
+113 2026-11-02 17:57:48 CONN EVP frame accepted: sensor=40 type=4
+114 2026-11-02 17:57:48 DATA The sensor node with 40 reports the door is closed
+115 2026-11-02 17:57:48 CONN EVP frame accepted: sensor=30 type=3
+116 2026-11-02 17:57:48 DATA The sensor node with 30 detected motion
+117 2026-11-02 17:57:48 CONN HLP frame accepted: sensor=21 type=2
+118 2026-11-02 17:57:49 CONN TBP frame accepted: sensor=10 type=1
+119 2026-11-02 17:57:49 CONN SGP frame accepted: sensor=50 type=5
+120 2026-11-02 17:57:49 CONN EVP frame accepted: sensor=40 type=4
+121 2026-11-02 17:57:49 DATA The sensor node with 40 reports the door is open
+122 2026-11-02 17:57:49 CONN EVP frame accepted: sensor=30 type=3
+123 2026-11-02 17:57:49 DATA The sensor node with 30 detected motion
+124 2026-11-02 17:57:49 CONN HLP frame accepted: sensor=21 type=2
+125 2026-11-02 17:57:50 CONN TBP frame accepted: sensor=10 type=1
+126 2026-11-02 17:57:50 CONN SGP frame accepted: sensor=50 type=5
+127 2026-11-02 17:57:50 CONN EVP frame accepted: sensor=40 type=4
+128 2026-11-02 17:57:50 DATA The sensor node with 40 reports the door is closed
+129 2026-11-02 17:57:50 CONN EVP frame accepted: sensor=30 type=3
+130 2026-11-02 17:57:50 DATA The sensor node with 30 detected motion
+131 2026-11-02 17:57:50 CONN HLP frame accepted: sensor=21 type=2
+132 2026-11-02 17:57:51 CONN TBP frame accepted: sensor=10 type=1
+133 2026-11-02 17:57:51 CONN SGP frame accepted: sensor=50 type=5
+134 2026-11-02 17:57:51 CONN EVP frame accepted: sensor=40 type=4
+135 2026-11-02 17:57:51 DATA The sensor node with 40 reports the door is open
+136 2026-11-02 17:57:51 CONN EVP frame accepted: sensor=30 type=3
+137 2026-11-02 17:57:51 DATA The sensor node with 30 detected motion
+138 2026-11-02 17:57:51 CONN HLP frame accepted: sensor=21 type=2
+139 2026-11-02 17:57:52 CONN TBP frame accepted: sensor=10 type=1
+140 2026-11-02 17:57:52 CONN SGP frame accepted: sensor=50 type=5
+141 2026-11-02 17:57:52 CONN EVP frame accepted: sensor=40 type=4
+142 2026-11-02 17:57:52 DATA The sensor node with 40 reports the door is closed
+143 2026-11-02 17:57:52 CONN EVP frame accepted: sensor=30 type=3
+144 2026-11-02 17:57:52 DATA The sensor node with 30 detected motion
+145 2026-11-02 17:57:52 CONN HLP frame accepted: sensor=21 type=2
+146 2026-11-02 17:57:53 CONN TBP frame accepted: sensor=10 type=1
+147 2026-11-02 17:57:53 CONN SGP frame accepted: sensor=50 type=5
+148 2026-11-02 17:57:53 CONN EVP frame accepted: sensor=40 type=4
+149 2026-11-02 17:57:53 DATA The sensor node with 40 reports the door is open
+150 2026-11-02 17:57:53 CONN EVP frame accepted: sensor=30 type=3
+151 2026-11-02 17:57:53 DATA The sensor node with 30 detected motion
+152 2026-11-02 17:57:53 CONN HLP frame accepted: sensor=21 type=2
+153 2026-11-02 17:57:54 CONN TBP frame accepted: sensor=10 type=1
+154 2026-11-02 17:57:54 CONN SGP frame accepted: sensor=50 type=5
+155 2026-11-02 17:57:54 CONN EVP frame accepted: sensor=40 type=4
+156 2026-11-02 17:57:54 DATA The sensor node with 40 reports the door is closed
+157 2026-11-02 17:57:54 CONN EVP frame accepted: sensor=30 type=3
+158 2026-11-02 17:57:54 DATA The sensor node with 30 detected motion
+159 2026-11-02 17:57:54 CONN HLP frame accepted: sensor=21 type=2
+160 2026-11-02 17:57:55 CONN TBP frame accepted: sensor=10 type=1
+161 2026-11-02 17:57:55 CONN SGP frame accepted: sensor=50 type=5
+162 2026-11-02 17:57:55 CONN EVP frame accepted: sensor=40 type=4
+163 2026-11-02 17:57:55 DATA The sensor node with 40 reports the door is open
+164 2026-11-02 17:57:55 CONN EVP frame accepted: sensor=30 type=3
+165 2026-11-02 17:57:55 DATA The sensor node with 30 detected motion
+166 2026-11-02 17:57:55 CONN HLP frame accepted: sensor=21 type=2
+167 2026-11-02 17:57:56 CONN TBP frame accepted: sensor=10 type=1
+168 2026-11-02 17:57:56 CONN SGP frame accepted: sensor=50 type=5
+169 2026-11-02 17:57:56 CONN EVP frame accepted: sensor=40 type=4
+170 2026-11-02 17:57:56 DATA The sensor node with 40 reports the door is closed
+171 2026-11-02 17:57:56 CONN EVP frame accepted: sensor=30 type=3
+172 2026-11-02 17:57:56 DATA The sensor node with 30 detected motion
+173 2026-11-02 17:57:56 CONN HLP frame accepted: sensor=21 type=2
+174 2026-11-02 17:57:57 CONN TBP frame accepted: sensor=10 type=1
+175 2026-11-02 17:57:57 CONN SGP frame accepted: sensor=50 type=5
+176 2026-11-02 17:57:57 CONN EVP frame accepted: sensor=40 type=4
+177 2026-11-02 17:57:57 DATA The sensor node with 40 reports the door is open
+178 2026-11-02 17:57:57 CONN EVP frame accepted: sensor=30 type=3
+179 2026-11-02 17:57:57 DATA The sensor node with 30 detected motion
+180 2026-11-02 17:57:57 CONN HLP frame accepted: sensor=21 type=2
+181 2026-11-02 17:57:58 CONN TBP frame accepted: sensor=10 type=1
+182 2026-11-02 17:57:58 CONN SGP frame accepted: sensor=50 type=5
+183 2026-11-02 17:57:58 CONN EVP frame accepted: sensor=40 type=4
+184 2026-11-02 17:57:58 DATA The sensor node with 40 reports the door is closed
+185 2026-11-02 17:57:58 CONN EVP frame accepted: sensor=30 type=3
+186 2026-11-02 17:57:58 DATA The sensor node with 30 detected motion
+187 2026-11-02 17:57:58 CONN HLP frame accepted: sensor=21 type=2
+188 2026-11-02 17:57:59 CONN TBP frame accepted: sensor=10 type=1
+189 2026-11-02 17:57:59 CONN SGP frame accepted: sensor=50 type=5
+190 2026-11-02 17:57:59 CONN EVP frame accepted: sensor=40 type=4
+191 2026-11-02 17:57:59 DATA The sensor node with 40 reports the door is open
+192 2026-11-02 17:57:59 CONN EVP frame accepted: sensor=30 type=3
+193 2026-11-02 17:57:59 DATA The sensor node with 30 detected motion
+194 2026-11-02 17:57:59 CONN HLP frame accepted: sensor=21 type=2
+195 2026-11-02 17:58:00 CONN TBP frame accepted: sensor=10 type=1
+196 2026-11-02 17:58:00 CONN SGP frame accepted: sensor=50 type=5
+197 2026-11-02 17:58:00 CONN EVP frame accepted: sensor=40 type=4
+198 2026-11-02 17:58:00 DATA The sensor node with 40 reports the door is closed
+199 2026-11-02 17:58:00 CONN EVP frame accepted: sensor=30 type=3
+200 2026-11-02 17:58:00 DATA The sensor node with 30 detected motion
+201 2026-11-02 17:58:00 CONN HLP frame accepted: sensor=21 type=2
+202 2026-11-02 17:58:01 CONN TBP frame accepted: sensor=10 type=1
+203 2026-11-02 17:58:01 CONN SGP frame accepted: sensor=50 type=5
+204 2026-11-02 17:58:01 CONN EVP frame accepted: sensor=40 type=4
+205 2026-11-02 17:58:01 DATA The sensor node with 40 reports the door is open
+206 2026-11-02 17:58:01 CONN EVP frame accepted: sensor=30 type=3
+207 2026-11-02 17:58:01 DATA The sensor node with 30 detected motion
+208 2026-11-02 17:58:01 CONN HLP frame accepted: sensor=21 type=2
+209 2026-11-02 17:58:02 CONN TBP frame accepted: sensor=10 type=1
+210 2026-11-02 17:58:02 CONN SGP frame accepted: sensor=50 type=5
+211 2026-11-02 17:58:02 CONN EVP frame accepted: sensor=40 type=4
+212 2026-11-02 17:58:02 DATA The sensor node with 40 reports the door is closed
+213 2026-11-02 17:58:02 CONN EVP frame accepted: sensor=30 type=3
+214 2026-11-02 17:58:02 DATA The sensor node with 30 detected motion
+215 2026-11-02 17:58:02 CONN HLP frame accepted: sensor=21 type=2
+216 2026-11-02 17:58:03 CONN TBP frame accepted: sensor=10 type=1
+217 2026-11-02 17:58:03 CONN SGP frame accepted: sensor=50 type=5
+218 2026-11-02 17:58:03 CONN EVP frame accepted: sensor=40 type=4
+219 2026-11-02 17:58:03 DATA The sensor node with 40 reports the door is open
+220 2026-11-02 17:58:03 CONN EVP frame accepted: sensor=30 type=3
+221 2026-11-02 17:58:03 DATA The sensor node with 30 detected motion
+222 2026-11-02 17:58:03 CONN HLP frame accepted: sensor=21 type=2
+223 2026-11-02 17:58:04 CONN TBP frame accepted: sensor=10 type=1
+224 2026-11-02 17:58:04 CONN SGP frame accepted: sensor=50 type=5
+225 2026-11-02 17:58:04 CONN EVP frame accepted: sensor=40 type=4
+226 2026-11-02 17:58:04 DATA The sensor node with 40 reports the door is closed
+227 2026-11-02 17:58:04 CONN EVP frame accepted: sensor=30 type=3
+228 2026-11-02 17:58:04 DATA The sensor node with 30 detected motion
+229 2026-11-02 17:58:04 CONN HLP frame accepted: sensor=21 type=2
+230 2026-11-02 17:58:05 CONN TBP frame accepted: sensor=10 type=1
+231 2026-11-02 17:58:05 CONN SGP frame accepted: sensor=50 type=5
+232 2026-11-02 17:58:05 CONN EVP frame accepted: sensor=40 type=4
+233 2026-11-02 17:58:05 DATA The sensor node with 40 reports the door is open
+234 2026-11-02 17:58:05 CONN EVP frame accepted: sensor=30 type=3
+235 2026-11-02 17:58:05 DATA The sensor node with 30 detected motion
+236 2026-11-02 17:58:05 CONN HLP frame accepted: sensor=21 type=2
+237 2026-11-02 17:58:06 CONN TBP frame accepted: sensor=10 type=1
+238 2026-11-02 17:58:06 CONN SGP frame accepted: sensor=50 type=5
+239 2026-11-02 17:58:06 CONN EVP frame accepted: sensor=40 type=4
+240 2026-11-02 17:58:06 DATA The sensor node with 40 reports the door is closed
+241 2026-11-02 17:58:06 CONN EVP frame accepted: sensor=30 type=3
+242 2026-11-02 17:58:06 DATA The sensor node with 30 detected motion
+243 2026-11-02 17:58:06 CONN HLP frame accepted: sensor=21 type=2
+244 2026-11-02 17:58:07 CONN TBP frame accepted: sensor=10 type=1
+245 2026-11-02 17:58:07 CONN SGP frame accepted: sensor=50 type=5
+246 2026-11-02 17:58:07 CONN EVP frame accepted: sensor=40 type=4
+247 2026-11-02 17:58:07 DATA The sensor node with 40 reports the door is open
+248 2026-11-02 17:58:07 CONN EVP frame accepted: sensor=30 type=3
+249 2026-11-02 17:58:07 DATA The sensor node with 30 detected motion
+250 2026-11-02 17:58:07 CONN HLP frame accepted: sensor=21 type=2
+251 2026-11-02 17:58:08 CONN TBP frame accepted: sensor=10 type=1
+252 2026-11-02 17:58:08 CONN SGP frame accepted: sensor=50 type=5
+253 2026-11-02 17:58:08 CONN EVP frame accepted: sensor=40 type=4
+254 2026-11-02 17:58:08 DATA The sensor node with 40 reports the door is closed
+255 2026-11-02 17:58:08 CONN EVP frame accepted: sensor=30 type=3
+256 2026-11-02 17:58:08 DATA The sensor node with 30 detected motion
+257 2026-11-02 17:58:08 CONN HLP frame accepted: sensor=21 type=2
+258 2026-11-02 17:58:09 CONN TBP frame accepted: sensor=10 type=1
+259 2026-11-02 17:58:09 CONN SGP frame accepted: sensor=50 type=5
+260 2026-11-02 17:58:09 CONN EVP frame accepted: sensor=40 type=4
+261 2026-11-02 17:58:09 DATA The sensor node with 40 reports the door is open
+262 2026-11-02 17:58:09 CONN EVP frame accepted: sensor=30 type=3
+263 2026-11-02 17:58:09 DATA The sensor node with 30 detected motion
+264 2026-11-02 17:58:09 CONN HLP frame accepted: sensor=21 type=2
+265 2026-11-02 17:58:10 CONN TBP frame accepted: sensor=10 type=1
+266 2026-11-02 17:58:10 CONN SGP frame accepted: sensor=50 type=5
+267 2026-11-02 17:58:10 CONN EVP frame accepted: sensor=40 type=4
+268 2026-11-02 17:58:10 DATA The sensor node with 40 reports the door is closed
+269 2026-11-02 17:58:10 CONN EVP frame accepted: sensor=30 type=3
+270 2026-11-02 17:58:10 DATA The sensor node with 30 detected motion
+271 2026-11-02 17:58:10 CONN HLP frame accepted: sensor=21 type=2
+272 2026-11-02 17:58:11 CONN TBP frame accepted: sensor=10 type=1
+273 2026-11-02 17:58:11 CONN SGP frame accepted: sensor=50 type=5
+274 2026-11-02 17:58:11 CONN EVP frame accepted: sensor=40 type=4
+275 2026-11-02 17:58:11 DATA The sensor node with 40 reports the door is open
+276 2026-11-02 17:58:11 CONN EVP frame accepted: sensor=30 type=3
+277 2026-11-02 17:58:11 DATA The sensor node with 30 detected motion
+278 2026-11-02 17:58:11 CONN HLP frame accepted: sensor=21 type=2
+279 2026-11-02 17:58:12 CONN TBP frame accepted: sensor=10 type=1
+280 2026-11-02 17:58:12 CONN SGP frame accepted: sensor=50 type=5
+281 2026-11-02 17:58:12 CONN EVP frame accepted: sensor=40 type=4
+282 2026-11-02 17:58:12 DATA The sensor node with 40 reports the door is closed
+283 2026-11-02 17:58:12 CONN EVP frame accepted: sensor=30 type=3
+284 2026-11-02 17:58:12 DATA The sensor node with 30 detected motion
+285 2026-11-02 17:58:12 CONN HLP frame accepted: sensor=21 type=2
+286 2026-11-02 17:58:13 CONN TBP frame accepted: sensor=10 type=1
+287 2026-11-02 17:58:13 CONN SGP frame accepted: sensor=50 type=5
+288 2026-11-02 17:58:13 CONN EVP frame accepted: sensor=40 type=4
+289 2026-11-02 17:58:13 DATA The sensor node with 40 reports the door is open
+290 2026-11-02 17:58:13 CONN EVP frame accepted: sensor=30 type=3
+291 2026-11-02 17:58:13 DATA The sensor node with 30 detected motion
+292 2026-11-02 17:58:13 CONN HLP frame accepted: sensor=21 type=2
+293 2026-11-02 17:58:14 CONN TBP frame accepted: sensor=10 type=1
+294 2026-11-02 17:58:14 CONN SGP frame accepted: sensor=50 type=5
+295 2026-11-02 17:58:14 CONN EVP frame accepted: sensor=40 type=4
+296 2026-11-02 17:58:14 DATA The sensor node with 40 reports the door is closed
+297 2026-11-02 17:58:14 CONN EVP frame accepted: sensor=30 type=3
+298 2026-11-02 17:58:14 DATA The sensor node with 30 detected motion
+299 2026-11-02 17:58:14 CONN HLP frame accepted: sensor=21 type=2
+300 2026-11-02 17:58:15 CONN TBP frame accepted: sensor=10 type=1
+301 2026-11-02 17:58:15 CONN SGP frame accepted: sensor=50 type=5
+302 2026-11-02 17:58:15 CONN EVP frame accepted: sensor=40 type=4
+303 2026-11-02 17:58:15 DATA The sensor node with 40 reports the door is open
+304 2026-11-02 17:58:15 CONN EVP frame accepted: sensor=30 type=3
+305 2026-11-02 17:58:15 DATA The sensor node with 30 detected motion
+306 2026-11-02 17:58:15 CONN HLP frame accepted: sensor=21 type=2
+307 2026-11-02 17:58:16 CONN TBP frame accepted: sensor=10 type=1
+308 2026-11-02 17:58:16 CONN SGP frame accepted: sensor=50 type=5
+309 2026-11-02 17:58:16 CONN EVP frame accepted: sensor=40 type=4
+310 2026-11-02 17:58:16 DATA The sensor node with 40 reports the door is closed
+311 2026-11-02 17:58:16 CONN EVP frame accepted: sensor=30 type=3
+312 2026-11-02 17:58:16 DATA The sensor node with 30 detected motion
+313 2026-11-02 17:58:16 CONN HLP frame accepted: sensor=21 type=2
+314 2026-11-02 17:58:17 CONN TBP frame accepted: sensor=10 type=1
+315 2026-11-02 17:58:17 CONN SGP frame accepted: sensor=50 type=5
+316 2026-11-02 17:58:17 CONN EVP frame accepted: sensor=40 type=4
+317 2026-11-02 17:58:17 DATA The sensor node with 40 reports the door is open
+318 2026-11-02 17:58:17 CONN EVP frame accepted: sensor=30 type=3
+319 2026-11-02 17:58:17 DATA The sensor node with 30 detected motion
+320 2026-11-02 17:58:17 CONN HLP frame accepted: sensor=21 type=2
+321 2026-11-02 17:58:18 CONN TBP frame accepted: sensor=10 type=1
+322 2026-11-02 17:58:18 CONN SGP frame accepted: sensor=50 type=5
+323 2026-11-02 17:58:18 CONN EVP frame accepted: sensor=40 type=4
+324 2026-11-02 17:58:18 DATA The sensor node with 40 reports the door is closed
+325 2026-11-02 17:58:18 CONN EVP frame accepted: sensor=30 type=3
+326 2026-11-02 17:58:18 DATA The sensor node with 30 detected motion
+327 2026-11-02 17:58:18 CONN HLP frame accepted: sensor=21 type=2
+328 2026-11-02 17:58:19 CONN TBP frame accepted: sensor=10 type=1
+329 2026-11-02 17:58:19 CONN SGP frame accepted: sensor=50 type=5
+330 2026-11-02 17:58:19 CONN EVP frame accepted: sensor=40 type=4
+331 2026-11-02 17:58:19 DATA The sensor node with 40 reports the door is open
+332 2026-11-02 17:58:19 CONN EVP frame accepted: sensor=30 type=3
+333 2026-11-02 17:58:19 DATA The sensor node with 30 detected motion
+334 2026-11-02 17:58:19 CONN HLP frame accepted: sensor=21 type=2
+335 2026-11-02 17:58:20 CONN TBP frame accepted: sensor=10 type=1
+336 2026-11-02 17:58:20 CONN SGP frame accepted: sensor=50 type=5
+337 2026-11-02 17:58:20 CONN EVP frame accepted: sensor=40 type=4
+338 2026-11-02 17:58:20 DATA The sensor node with 40 reports the door is closed
+339 2026-11-02 17:58:20 CONN EVP frame accepted: sensor=30 type=3
+340 2026-11-02 17:58:20 DATA The sensor node with 30 detected motion
+341 2026-11-02 17:58:20 CONN HLP frame accepted: sensor=21 type=2
+342 2026-11-02 17:58:21 CONN TBP frame accepted: sensor=10 type=1
+343 2026-11-02 17:58:21 CONN SGP frame accepted: sensor=50 type=5
+344 2026-11-02 17:58:21 CONN EVP frame accepted: sensor=40 type=4
+345 2026-11-02 17:58:21 DATA The sensor node with 40 reports the door is open
+346 2026-11-02 17:58:21 CONN EVP frame accepted: sensor=30 type=3
+347 2026-11-02 17:58:21 DATA The sensor node with 30 detected motion
+348 2026-11-02 17:58:21 CONN HLP frame accepted: sensor=21 type=2
+349 2026-11-02 17:58:21 CONN SGP client disconnected (socket=12)
+350 2026-11-02 17:58:22 CONN TBP frame accepted: sensor=10 type=1
+351 2026-11-02 17:58:22 CONN EVP frame accepted: sensor=40 type=4
+352 2026-11-02 17:58:22 DATA The sensor node with 40 reports the door is closed
+353 2026-11-02 17:58:22 CONN EVP frame accepted: sensor=30 type=3
+354 2026-11-02 17:58:22 DATA The sensor node with 30 detected motion
+355 2026-11-02 17:58:22 CONN HLP frame accepted: sensor=21 type=2
+356 2026-11-02 17:58:23 CONN TBP frame accepted: sensor=10 type=1
+357 2026-11-02 17:58:23 CONN EVP frame accepted: sensor=40 type=4
+358 2026-11-02 17:58:23 DATA The sensor node with 40 reports the door is open
+359 2026-11-02 17:58:23 CONN EVP frame accepted: sensor=30 type=3
+360 2026-11-02 17:58:23 DATA The sensor node with 30 detected motion
+361 2026-11-02 17:58:23 CONN HLP frame accepted: sensor=21 type=2
+362 2026-11-02 17:58:24 CONN TBP frame accepted: sensor=10 type=1
+363 2026-11-02 17:58:24 CONN EVP frame accepted: sensor=40 type=4
+364 2026-11-02 17:58:24 DATA The sensor node with 40 reports the door is closed
+365 2026-11-02 17:58:24 CONN EVP frame accepted: sensor=30 type=3
+366 2026-11-02 17:58:24 DATA The sensor node with 30 detected motion
+367 2026-11-02 17:58:24 CONN HLP frame accepted: sensor=21 type=2
+368 2026-11-02 17:58:25 CONN TBP frame accepted: sensor=10 type=1
+369 2026-11-02 17:58:25 CONN EVP frame accepted: sensor=40 type=4
+370 2026-11-02 17:58:25 DATA The sensor node with 40 reports the door is open
+371 2026-11-02 17:58:25 CONN EVP frame accepted: sensor=30 type=3
+372 2026-11-02 17:58:25 DATA The sensor node with 30 detected motion
+373 2026-11-02 17:58:25 CONN EVP client disconnected (socket=11)
+374 2026-11-02 17:58:25 CONN HLP frame accepted: sensor=21 type=2
+375 2026-11-02 17:58:26 CONN TBP frame accepted: sensor=10 type=1
+376 2026-11-02 17:58:26 CONN EVP frame accepted: sensor=30 type=3
+377 2026-11-02 17:58:26 DATA The sensor node with 30 detected motion
+378 2026-11-02 17:58:26 CONN HLP frame accepted: sensor=21 type=2
+379 2026-11-02 17:58:27 CONN EVP client disconnected (socket=10)
+380 2026-11-02 17:58:27 CONN TBP frame accepted: sensor=10 type=1
+381 2026-11-02 17:58:27 CONN HLP frame accepted: sensor=21 type=2
+382 2026-11-02 17:58:28 CONN TBP frame accepted: sensor=10 type=1
+383 2026-11-02 17:58:28 CONN HLP frame accepted: sensor=21 type=2
+384 2026-11-02 17:58:28 CONN HLP client disconnected (socket=9)
+385 2026-11-02 17:58:29 CONN TBP frame accepted: sensor=10 type=1
+386 2026-11-02 17:58:30 CONN TBP frame accepted: sensor=10 type=1
+387 2026-11-02 17:58:30 CONN TBP client disconnected (socket=8)
+388 2026-11-02 17:58:31 CONN Connection Manager stopped
+389 2026-11-02 17:58:31 DATA Data Manager stopped
+390 2026-11-02 17:58:31 MAIN Gateway shutting down
+1 2026-11-03 01:17:36 MAIN Gateway started (TCP base port 9000, HTTP port 8080)
+2 2026-11-03 01:17:36 CONN TBP listening on TCP port 9000
+3 2026-11-03 01:17:36 CONN HLP listening on TCP port 9001
+4 2026-11-03 01:17:36 CONN EVP listening on TCP port 9002
+5 2026-11-03 01:17:36 CONN SGP listening on TCP port 9003
+6 2026-11-03 01:17:36 DATA Data Manager started
+7 2026-11-03 01:17:41 CONN TBP client connected (socket=8)
+8 2026-11-03 01:17:41 CONN TBP frame accepted: sensor=10 type=1
+9 2026-11-03 01:17:42 CONN TBP frame accepted: sensor=10 type=1
+10 2026-11-03 01:17:43 CONN TBP frame accepted: sensor=10 type=1
+11 2026-11-03 01:17:44 CONN TBP frame accepted: sensor=10 type=1
+12 2026-11-03 01:17:45 CONN TBP frame accepted: sensor=10 type=1
+13 2026-11-03 01:17:46 CONN TBP frame accepted: sensor=10 type=1
+14 2026-11-03 01:17:47 CONN TBP frame accepted: sensor=10 type=1
+15 2026-11-03 01:17:48 CONN TBP frame accepted: sensor=10 type=1
+16 2026-11-03 01:17:49 CONN TBP frame accepted: sensor=10 type=1
+17 2026-11-03 01:17:50 CONN TBP frame accepted: sensor=10 type=1
+18 2026-11-03 01:17:51 CONN TBP frame accepted: sensor=10 type=1
+19 2026-11-03 01:17:52 CONN TBP frame accepted: sensor=10 type=1
+20 2026-11-03 01:17:53 CONN TBP frame accepted: sensor=10 type=1
+21 2026-11-03 01:17:54 CONN TBP frame accepted: sensor=10 type=1
+22 2026-11-03 01:17:55 CONN TBP frame accepted: sensor=10 type=1
+23 2026-11-03 01:17:56 CONN TBP frame accepted: sensor=10 type=1
+24 2026-11-03 01:17:57 CONN TBP frame accepted: sensor=10 type=1
+25 2026-11-03 01:17:58 CONN TBP frame accepted: sensor=10 type=1
+26 2026-11-03 01:17:59 CONN TBP frame accepted: sensor=10 type=1
+27 2026-11-03 01:18:00 CONN TBP frame accepted: sensor=10 type=1
+28 2026-11-03 01:18:01 CONN TBP frame accepted: sensor=10 type=1
+29 2026-11-03 01:18:02 CONN TBP frame accepted: sensor=10 type=1
+30 2026-11-03 01:18:02 CONN TBP client disconnected (socket=8)
+31 2026-11-03 01:18:19 CONN Connection Manager stopped
+32 2026-11-03 01:18:19 DATA Data Manager stopped
+33 2026-11-03 01:18:19 MAIN Gateway shutting down

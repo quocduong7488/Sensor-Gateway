@@ -19,7 +19,8 @@ SOURCES := 	\
 	$(SRC_DIR)/connmgr.c	\
 	$(SRC_DIR)/sbuffer.c	\
 	$(SRC_DIR)/protocol_adapter.c	\
-	$(SRC_DIR)/datamgr.c	\
+    $(SRC_DIR)/room_config.c	\
+	$(SRC_DIR)/datamgr.c	
 
 
 OBJS := $(patsubst $(SRC_DIR)/%.c,$(BUILD_DIR)/%.o,$(SOURCES))

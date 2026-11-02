@@ -42,6 +42,8 @@ typedef struct {
     uint16_t base_port;
     unsigned int period_ms;
     send_mode_t mode;
+    int has_fixed_value;
+    double fixed_value;
 } node_config_t;
 
 static uint16_t protocol_port_offset(node_protocol_t protocol)
@@ -253,8 +255,7 @@ static int receive_sgp_reply(int fd)
     return -1;
 }
 
-static size_t build_frame(const node_config_t *config, uint8_t *frame,
-                          size_t capacity, unsigned int sequence)
+static size_t build_frame(const node_config_t *config, uint8_t *frame, size_t capacity, unsigned int sequence)
 {
     time_t now = time(NULL);
     uint64_t timestamp;
@@ -271,7 +272,9 @@ static size_t build_frame(const node_config_t *config, uint8_t *frame,
             return 0U;
         }
         /* TBP: id LE16, IEEE-754 double bytes, timestamp LE64. */
-        value = 20.0 + (double)(sequence % 100U) / 10.0;
+        value = config->has_fixed_value
+              ? config->fixed_value
+              : 20.0 + (double)(sequence % 100U) / 10.0;
         put_u16_le(frame, config->id);
         memcpy(frame + 2U, &value, sizeof(value));
         put_u64_le(frame + 10U, timestamp);
@@ -279,7 +282,9 @@ static size_t build_frame(const node_config_t *config, uint8_t *frame,
     }
     case NODE_HLP: {
         int length;
-        value = 40.0 + (double)(sequence % 500U) / 10.0;
+        value = config->has_fixed_value
+              ? config->fixed_value
+              : 40.0 + (double)(sequence % 500U) / 10.0;
         length = snprintf((char *)frame, capacity, "HUM %u %.1f %llu\n",
                           (unsigned int)config->id, value,
                           (unsigned long long)timestamp);
@@ -306,7 +311,9 @@ static size_t build_frame(const node_config_t *config, uint8_t *frame,
         frame[0] = 0x02U;
         frame[1] = 0x07U;
         put_u16_be(frame + 2U, config->id);
-        frame[4] = (uint8_t)(sequence % 2U);
+        frame[4] = config->has_fixed_value
+                 ? (uint8_t)config->fixed_value
+                 : (uint8_t)(sequence % 2U);
         put_u32_be(frame + 5U, (uint32_t)timestamp);
         return 9U;
     case NODE_SGP: {
@@ -316,7 +323,9 @@ static size_t build_frame(const node_config_t *config, uint8_t *frame,
             return 0U;
         }
         /* SGP: 0x7E, id BE16, ppm BE16, timestamp BE32, CRC BE16. */
-        ppm = (uint16_t)(250U + (sequence % 100U));
+        ppm = config->has_fixed_value
+            ? (uint16_t)config->fixed_value
+            : (uint16_t)(250U + (sequence % 100U));
         frame[0] = 0x7eU;
         put_u16_be(frame + 1U, config->id);
         put_u16_be(frame + 3U, ppm);
@@ -375,7 +384,8 @@ static void print_usage(const char *program)
 {
     fprintf(stderr,
         "Usage: %s <tbp|hlp|evp-motion|evp-door|sgp> <id> "
-        "[host] [base_port] [period_ms] [--fragment|--glue|--corrupt]\n"
+        "[host] [base_port] [period_ms] "
+        "[--fragment|--glue|--corrupt] [--value number]\n"
         "Defaults: host=%s base_port=%u period_ms=%u\n",
         program, DEFAULT_HOST, DEFAULT_BASE_PORT, DEFAULT_PERIOD_MS);
 }
@@ -388,7 +398,7 @@ int main(int argc, char **argv)
     int fd;
     unsigned int sequence = 0U;
 
-    if (argc < 3 || argc > 7) {
+    if (argc < 3 || argc > 10) {
         print_usage(argv[0]);
         return EXIT_FAILURE;
     }
@@ -428,15 +438,70 @@ int main(int argc, char **argv)
         }
         config.period_ms = (unsigned int)number;
     }
-    if (argc >= 7) {
-        if (strcmp(argv[6], "--fragment") == 0) {
+    for (int i = 6; i < argc; ++i) {
+        if (strcmp(argv[i], "--fragment") == 0) {
             config.mode = MODE_FRAGMENT;
-        } else if (strcmp(argv[6], "--glue") == 0) {
+        } else if (strcmp(argv[i], "--glue") == 0) {
             config.mode = MODE_GLUE;
-        } else if (strcmp(argv[6], "--corrupt") == 0) {
+        } else if (strcmp(argv[i], "--corrupt") == 0) {
             config.mode = MODE_CORRUPT;
+        } else if (strcmp(argv[i], "--value") == 0) {
+            char *end = NULL;
+           double value;
+
+        if (config.has_fixed_value || i + 1 >= argc) {
+            fprintf(stderr, "Invalid or duplicate --value option\n");
+            return EXIT_FAILURE;
+        }
+
+        errno = 0;
+        value = strtod(argv[++i], &end);
+
+        if (errno != 0 || end == argv[i] || *end != '\0' ||
+            !isfinite(value)) {
+            fprintf(stderr, "Invalid sensor value\n");
+            return EXIT_FAILURE;
+        }
+
+           switch (config.protocol) {
+            case NODE_TBP:
+                if (value < -40.0 || value > 85.0) {
+                   fprintf(stderr, "Temperature must be -40..85 C\n");
+                   return EXIT_FAILURE;
+               }
+                break;
+
+            case NODE_HLP:
+                if (value < 0.0 || value > 100.0) {
+                    fprintf(stderr, "Humidity must be 0..100 %%RH\n");
+                    return EXIT_FAILURE;
+                }
+                break;
+
+            case NODE_EVP_DOOR:
+                if (value != 0.0 && value != 1.0) {
+                    fprintf(stderr, "Door value must be 0 or 1\n");
+                    return EXIT_FAILURE;
+                }
+                break;
+
+            case NODE_SGP:
+                if (value < 0.0 || value > 10000.0 ||
+                    value != (double)(unsigned int)value) {
+                    fprintf(stderr, "Gas concentration must be an integer in 0..10000\n");
+                    return EXIT_FAILURE;
+                }
+                break;
+
+            case NODE_EVP_MOTION:
+                fprintf(stderr, "--value is not supported for EVP motion\n");
+                return EXIT_FAILURE;
+           }
+
+            config.has_fixed_value = 1;
+            config.fixed_value = value;
         } else {
-            fprintf(stderr, "Unknown mode: %s\n", argv[6]);
+            fprintf(stderr, "Unknown option: %s\n", argv[i]);
             print_usage(argv[0]);
             return EXIT_FAILURE;
         }
