@@ -34,5 +34,7 @@ int sbuffer_insert(sbuffer_t *buffer, const sensor_data_t *data);
 int sbuffer_read(sbuffer_t *buffer, sbuffer_consumer_t consumer, sensor_data_t *data);
 void sbuffer_shutdown(sbuffer_t *buffer);
 void sbuffer_destroy(sbuffer_t *buffer);
+int sbuffer_storage_peek(sbuffer_t *buffer,sensor_data_t *data,sbuffer_node_t **token);
+int sbuffer_storage_ack(sbuffer_t *buffer,sbuffer_node_t *token);
 
 #endif

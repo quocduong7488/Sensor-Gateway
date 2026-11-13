@@ -146,7 +146,7 @@ int main(int argc, char *argv[]){
     }
     storage_created = 1;
 
-    while(!signal_received){
+    while(!signal_received && !atomic_load(&gateway.stop)){
         const struct timespec delay = { .tv_sec = 0, .tv_nsec = 100000000L };
         nanosleep(&delay, NULL);
     };

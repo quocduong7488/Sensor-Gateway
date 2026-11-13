@@ -140,20 +140,89 @@ int sbuffer_read(sbuffer_t *buffer, sbuffer_consumer_t consumer, sensor_data_t *
             return 0;
         }
 
-        /*
-         * Chưa có dữ liệu dành cho consumer này.
-         * Ngủ đến khi được thông báo.
-         */
         pthread_cond_wait(
             &buffer->cond,
             &buffer->mutex
         );
 
-        /*
-         * Sau khi thức dậy, vòng lặp sẽ kiểm tra
-         * lại điều kiện dưới mutex.
-         */
     }
+}
+
+int sbuffer_storage_peek(sbuffer_t *buffer, sensor_data_t *data, sbuffer_node_t **token)
+{
+    sbuffer_node_t *node;
+
+    if (buffer == NULL || data == NULL || token == NULL) {
+        return -1;
+    }
+
+    pthread_mutex_lock(&buffer->mutex);
+
+    for (;;) {
+        node = buffer->head;
+
+        while (node != NULL) {
+            if (!node->read_by_storage) {
+                *data = node->data;
+                *token = node;
+
+                pthread_mutex_unlock(&buffer->mutex);
+                return 1;
+            }
+
+            node = node->next;
+        }
+
+        if (buffer->shutdown) {
+            pthread_mutex_unlock(&buffer->mutex);
+            return 0;
+        }
+
+        pthread_cond_wait(
+            &buffer->cond,
+            &buffer->mutex
+        );
+    }
+}
+
+int sbuffer_storage_ack(sbuffer_t *buffer, sbuffer_node_t *token)
+{
+    sbuffer_node_t *node;
+
+    if (buffer == NULL || token == NULL) {
+        return -1;
+    }
+
+    pthread_mutex_lock(&buffer->mutex);
+    node = buffer->head;
+
+    while (node != NULL && node != token) {
+        node = node->next;
+    }
+
+    if (node == NULL) {
+        pthread_mutex_unlock(&buffer->mutex);
+        return -1;
+    }
+    node->read_by_storage = true;
+    while (buffer->head != NULL &&
+           buffer->head->read_by_data &&
+           buffer->head->read_by_storage) {
+
+        sbuffer_node_t *old = buffer->head;
+
+        buffer->head = old->next;
+
+        if (buffer->head == NULL) {
+            buffer->tail = NULL;
+        }
+
+        free(old);
+    }
+
+    pthread_mutex_unlock(&buffer->mutex);
+
+    return 0;
 }
 
 void sbuffer_shutdown(sbuffer_t *buffer)

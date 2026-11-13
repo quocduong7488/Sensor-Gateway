@@ -9,7 +9,7 @@ SENSOR_NODE := sensor_node
 CFLAGS := -std=c11 -Wall -Wextra -Werror -Wpedantic -pthread
 CPPFLAGS := -I$(INC_DIR) -D_POSIX_C_SOURCE=200809L
 LDFLAGS := -pthread
-LDLIBS := -lm
+LDLIBS := -lm -lsqlite3
 
 SOURCES := 	\
 	$(SRC_DIR)/main.c	\
@@ -20,7 +20,8 @@ SOURCES := 	\
 	$(SRC_DIR)/sbuffer.c	\
 	$(SRC_DIR)/protocol_adapter.c	\
     $(SRC_DIR)/room_config.c	\
-	$(SRC_DIR)/datamgr.c	
+	$(SRC_DIR)/datamgr.c	\
+	$(SRC_DIR)/storagemgr.c	\
 
 
 OBJS := $(patsubst $(SRC_DIR)/%.c,$(BUILD_DIR)/%.o,$(SOURCES))
