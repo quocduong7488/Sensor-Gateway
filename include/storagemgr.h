@@ -23,7 +23,7 @@
 /*
  * Thời gian chờ giữa hai lần retry, tính bằng giây.
  */
-#define STORAGE_RETRY_DELAY 1
+#define STORAGE_RETRY_DELAY 5
 
 /*
  * Storage Manager thread entry point.

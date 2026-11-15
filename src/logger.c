@@ -186,12 +186,14 @@ static void logger_process(void)
                     if (result == 1)
                     {
                         close(log_fd);
+                        close(fifo_fd);
                         _exit(EXIT_SUCCESS);
                     }
 
                     if (result == -1)
                     {
                         close(log_fd);
+                        close(fifo_fd);
                         _exit(EXIT_FAILURE);
                     }
                 }

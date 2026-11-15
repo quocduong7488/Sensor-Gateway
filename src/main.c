@@ -95,11 +95,13 @@ int main(int argc, char *argv[]){
 
     if(sigaction(SIGINT, &action, NULL) == -1 || sigaction(SIGTERM, &action, NULL) == -1){
         perror("sigaction");
+        sbuffer_destroy(&shared_buffer);
         return EXIT_FAILURE;
     }
 
     if (logger_start() == -1) {
         fprintf(stderr, "Failed to start logger\n");
+        sbuffer_destroy(&shared_buffer);
         return EXIT_FAILURE;
     }
 
@@ -110,6 +112,7 @@ int main(int argc, char *argv[]){
     if (logger_write("MAIN", message) == -1) {
         fprintf(stderr, "Failed to write startup log\n");
         logger_stop();
+        sbuffer_destroy(&shared_buffer);
         return EXIT_FAILURE;
     }
 
